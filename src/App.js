@@ -70,15 +70,13 @@ function Card({Cardval, CardSuit}){
     }
   }
   function checkforFaceCard(val){
+    if(val === 1){return "A";}
     if(val < 11){
       return val;
     }
     let suitels = ["J", "Q", "K", "A"]
     return suitels[val-11];
   }  
-  function buttontest(){
-    alert("hi");
-  }
   const [suit, setsuit] = useState(getsuite(CardSuit));
 
   Cardval = checkforFaceCard(Cardval);
@@ -180,96 +178,146 @@ function CardlistTOwebhook({ls}){
 }
 
 //init
-var currdeck = getRand(makeDeck(), 52);
+//var currdeck = getRand(makeDeck(), 52);
+var currdeck = [[14,1], [14,2], [10, 1], [9, 1],[9, 1], [1, 1], [9, 1], [1, 1],[9, 1], [1, 1]];
 var parcurcard = 2;
 var finishgame = false;
+var whowon = '';
+
 
 
 // clube heart diamond spade
 // 0     1     2       3 
-export default function Blackjack() {
-  const [resetval, setcurr] = useState(-1);
+function Blackjack() {
+  const [resetval, setcurr] = useState(2);
 
 
   function getcurrhand(){
     let currhand = 0;
+    let numofacc = 0;
     for (let i = 0; i < parcurcard; i++) {
       let el = currdeck[i][0];
-      if (el === 14){currhand += 11;continue;}
+      if (el === 14){currhand += 11;numofacc++;continue;}
       if (el > 10){currhand += 10;continue;}
       currhand += el;
     }
+    for (let i = 0; i < numofacc; i++) {
+      if(numofacc > 0 && currhand > 21)
+      {
+        currhand -= 10;
+      }else{break;}
+    }
     return currhand;
   }
-  function checkforwin(){
-    var currhand = getcurrhand();
+  function checkforwin(currhand){
 
     console.log(currhand);
     console.log("who won");
+
+    var opp = sum(getpartoflist(currdeck, parcurcard, 2));
+
+    if(opp < Math.round((Math.random() * 6)) + 0){
+      opp = sum(getpartoflist(currdeck, parcurcard, 5)); 
+    }
+    else{
+    if(opp < Math.round((Math.random() * 4)) + 12){
+      opp = sum(getpartoflist(currdeck, parcurcard, 4)); 
+    }
+    else{
+    if(opp < Math.round((Math.random() * 6)) + 15){
+      opp = sum(getpartoflist(currdeck, parcurcard, 3)); 
+        }
+      }
+    }
+
+
     if(currhand === 21){
-      console.log("you win");
-      return;
+      whowon = "you won";
+      console.log("you won");
     }
     if(currhand > 21){
+      whowon = "you busted";
       console.log("you busted");
-      return;
     }
     if(currhand < 21){
-      var opp = sum(getpartoflist(currdeck, parcurcard, Math.round((Math.random() * 3 ) + 2)));
       console.log(opp);
       if(opp < 22){
       if(opp > currhand){
+        whowon = "you lost";
         console.log("you lost");
       }if(opp === currhand){
+        whowon = "you tied";
         console.log("you tied")
       }if(opp < currhand){
+        whowon = "you won";
         console.log("you won");
       }
-      }else{console.log("you won")}
-      return;
+      }else{whowon = "you win";console.log("you won");}
     }
 
+    whowon = whowon + " " + currhand + " vs " + opp;
+    alert(whowon);
+    setcurr(Math.random());
 
   }
   function dealcard(){
     if(finishgame){return;}
-    setcurr(parcurcard + 1);
+    
     parcurcard++;
     var curhand = getcurrhand();
     if(curhand >= 21){
-      checkforwin();
+      checkforwin(curhand);
       finishgame = true;
+      return;
     }
-    
+    setcurr(Math.random());
   }
   function holdcards(){
     if(finishgame === true){return;}
-    checkforwin();
+    var curhand = getcurrhand();
+    checkforwin(curhand);
     finishgame = true;
   }
   function reset(){
     currdeck = getRand(makeDeck(), 52);
     parcurcard = 2;
     finishgame = false;
+    whowon = '';
     setcurr(Math.random());    
   }
-  //check for win oth move 
-  if(getcurrhand() === 21){
-    checkforwin();
-    finishgame = true; 
-  }
+
+
+  return (
+      <>
+        <div className='options'>
+          <CardButton Cardval={"reset"} CardSuit={4} Clickfunc={() => reset()}></CardButton> 
+          <CardButton Cardval={"hold"} CardSuit={4} Clickfunc={() => holdcards()} />
+          <CardButton Cardval={"deal"} CardSuit={4} Clickfunc={() => dealcard()} />
+          <CardButton Cardval={whowon} CardSuit={4}></CardButton>
+        </div>
+        <div className='currcards'>
+          <CardlistTOwebhook ls={getpartoflist(currdeck, 0, parcurcard)}/>
+        </div>
+
+      </>
+  );
+}
+
+export default function App(){
+
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <CardButton Cardval={"reset"} CardSuit={4} Clickfunc={() => reset()}></CardButton> 
-        <CardButton Cardval={"hold"} CardSuit={4} Clickfunc={() => holdcards()} />
-        <CardButton Cardval={"deal"} CardSuit={4} Clickfunc={() => dealcard()} />
-        <CardlistTOwebhook ls={getpartoflist(currdeck, 0, parcurcard)}/>
-      
-      
+
+        <Blackjack />
+
       </header>
     </div>
   );
 }
+
+
+
+
