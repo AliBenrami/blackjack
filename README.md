@@ -1,4 +1,4 @@
-# Pysnake
+# blackjack-webgame
 
 poker webapp
 
