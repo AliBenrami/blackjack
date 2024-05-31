@@ -1,38 +1,72 @@
+
+p {
+  color: #282c34;
+}
+
+
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
+  min-width: fit-content;
+  width: calc(100%);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  gap: 20px;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Card {
+  min-width: 2.5in;
+  min-height: 3.5in;
+  width: 2.5in;
+  height: 3.5in;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  border-radius: 5mm; 
+  
+}
+.CardSuitsTop {
+  width: 40px;
+  height: 40px;  
+  transform: translate(-12px, 0px);
+}
+.CardSuitsBot {
+  width: 40px;
+  height: 40px;
+  transform: translate(12px, 0px);
+}
+.CardTextTop {
+  font-size: 25px;
+  width: 100%; 
+  text-align: left;
+  position: absolute;
+  top: 0px;
+  transform: translate(10%, 0px);
+} 
+.CardTextBot{
+  font-size: 25px;
+  width: 100%;
+  text-align: right;
+  position: absolute;
+  bottom: 0px;
+  transform: translate(-10%, 0px);
+}
+.CardButton {
+  min-width: 2.5in;
+  min-height: 3.5in;
+  width: 2.5in;
+  height: 3.5in;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  border-radius: 5mm; 
+} 
+.CardButton:hover {
+  background-color: rgb(147, 198, 214);
 }
