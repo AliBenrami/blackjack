@@ -178,8 +178,7 @@ function CardlistTOwebhook({ls}){
 }
 
 //init
-//var currdeck = getRand(makeDeck(), 52);
-var currdeck = [[14,1], [14,2], [10, 1], [9, 1],[9, 1], [1, 1], [9, 1], [1, 1],[9, 1], [1, 1]];
+var currdeck = getRand(makeDeck(), 52);
 var parcurcard = 2;
 var finishgame = false;
 var whowon = '';
