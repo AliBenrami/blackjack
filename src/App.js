@@ -15,7 +15,6 @@ function getRand(ls, numbout){
     outlist.push(ls[inRan]);
     ls.splice(inRan, 1);
   }
-  //console.log("getrand");
   return outlist;
 }
 function sum(ls){
@@ -128,9 +127,6 @@ function CardButton({Cardval, CardSuit, Clickfunc}){
     let suitels = ["J", "Q", "K", "A"]
     return suitels[val-11];
   }  
-  function buttontest(){
-    alert("hi");
-  }
   const [suit, setsuit] = useState(getsuite(CardSuit));
 
   Cardval = checkforFaceCard(Cardval);
@@ -177,7 +173,7 @@ function CardlistTOwebhook({ls}){
   );
 }
 
-//init
+//init blackjack var
 var currdeck = getRand(makeDeck(), 52);
 var parcurcard = 2;
 var finishgame = false;
@@ -187,7 +183,7 @@ var whowon = '';
 
 // clube heart diamond spade
 // 0     1     2       3 
-function Blackjack() {
+function Blackjack({}) {
   const [resetval, setcurr] = useState(2);
 
 
@@ -210,8 +206,6 @@ function Blackjack() {
   }
   function checkforwin(currhand){
 
-    console.log(currhand);
-    console.log("who won");
 
     var opp = sum(getpartoflist(currdeck, parcurcard, 2));
 
@@ -232,30 +226,23 @@ function Blackjack() {
 
     if(currhand === 21){
       whowon = "you won";
-      console.log("you won");
     }
     if(currhand > 21){
       whowon = "you busted";
-      console.log("you busted");
     }
     if(currhand < 21){
-      console.log(opp);
       if(opp < 22){
       if(opp > currhand){
         whowon = "you lost";
-        console.log("you lost");
       }if(opp === currhand){
         whowon = "you tied";
-        console.log("you tied")
       }if(opp < currhand){
         whowon = "you won";
-        console.log("you won");
       }
-      }else{whowon = "you win";console.log("you won");}
+      }else{whowon = "you win";}
     }
 
     whowon = whowon + " " + currhand + " vs " + opp;
-    alert(whowon);
     setcurr(Math.random());
 
   }
@@ -303,6 +290,7 @@ function Blackjack() {
 }
 
 export default function App(){
+
 
 
 
