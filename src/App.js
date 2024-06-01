@@ -145,7 +145,59 @@ function CardButton({Cardval, CardSuit, Clickfunc}){
     </button>
   );
 }
+function Cardtag({Cardval, CardSuit}){
+  // clube heart diamond spade
+  // 0     1     2       3 
 
+  // J  Q  K  A
+  // 11 12 13 14
+  function getsuite(val){
+    if(val === 0){
+      return Club;
+    }
+    if(val === 1){
+      return Heart;
+    }    
+    if(val === 2){
+      return Diamond;
+    }    
+    if(val === 3){
+      return Spade;
+    }
+    if(val === 4){
+      return Blank;
+    }
+  }
+  function checkforFaceCard(val){
+    if(typeof val === "string"){
+      return val;
+    }
+    if(val < 11){
+      return val;
+    }
+    let suitels = ["J", "Q", "K", "A"]
+    return suitels[val-11];
+  }  
+  const [suit, setsuit] = useState(getsuite(CardSuit));
+
+  Cardval = checkforFaceCard(Cardval);
+
+  return(
+    <div className='CardButton'>
+      <header className='CardTextTop'>
+        <p>Log</p>
+        <img src={suit} alt='icon' className='CardSuitsTop'/>
+      </header>
+
+        <p className='cardtagText'>{Cardval}</p>
+        
+      <footer className='CardTextBot'>
+        <img src={suit} accessKey='icon' className='CardSuitsBot'/>
+        <p>Log</p>
+      </footer>
+    </div>
+  );
+}
 
 
 
@@ -279,7 +331,7 @@ function Blackjack({}) {
           <CardButton Cardval={"reset"} CardSuit={4} Clickfunc={() => reset()}></CardButton> 
           <CardButton Cardval={"hold"} CardSuit={4} Clickfunc={() => holdcards()} />
           <CardButton Cardval={"deal"} CardSuit={4} Clickfunc={() => dealcard()} />
-          <CardButton Cardval={whowon} CardSuit={4}></CardButton>
+          <Cardtag Cardval={whowon} CardSuit={3}></Cardtag>
         </div>
         <div className='currcards'>
           <CardlistTOwebhook ls={getpartoflist(currdeck, 0, parcurcard)}/>

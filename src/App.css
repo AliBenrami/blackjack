@@ -1,6 +1,7 @@
 
 p {
   color: #282c34;
+  size: 24px;
 }
 
 
@@ -60,6 +61,7 @@ p {
   transform: translate(-10%, 0px);
 }
 .CardButton {
+  display: flex;
   min-width: 2.5in;
   min-height: 3.5in;
   width: 2.5in;
@@ -71,7 +73,14 @@ p {
 .CardButton:hover {
   background-color: rgb(147, 198, 214);
 }
+.cardtagText {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  transform: translate(10%, 0px);
 
+}
 
 
 
